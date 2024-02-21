@@ -1,0 +1,40 @@
+The last thing to know about Period is what objects it can be used with. Let’s look at 
+some code:
+3: LocalDate date = LocalDate.of(2015, 1, 20);
+4: LocalTime time = LocalTime.of(6, 15);
+5: LocalDateTime dateTime = LocalDateTime.of(date, time);
+6: Period period = Period.ofMonths(1);
+7: System.out.println(date.plus(period)); // 2015-02-20
+8: System.out.println(dateTime.plus(period)); // 2015-02-20T06:15
+9: System.out.println(time.plus(period)); // UnsupportedTemporalTypeException
+
+LocalDate date = LocalDate.of(2020, Month.JANUARY, 20);
+LocalTime time = LocalTime.of(11, 12, 34);
+LocalDateTime dateTime = LocalDateTime.of(date, time);System.out.println(date
+.format(DateTimeFormatter.ISO_LOCAL_DATE));
+System.out.println(time.format(DateTimeFormatter.ISO_LOCAL_TIME));
+System.out.println(dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+
+DateTimeFormatter shortDateTime =
+ DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+System.out.println(shortDateTime.format(dateTime)); // 1/20/20
+System.out.println(shortDateTime.format(date)); // 1/20/20
+System.out.println(
+ shortDateTime.format(time)); // UnsupportedTemporalTypeException
+
+There are two predefi ned formats that can show up on the exam: SHORT and MEDIUM. The 
+other predefi ned formats involve time zones, which are not on the exam.
+LocalDate date = LocalDate.of(2020, Month.JANUARY, 20);
+LocalTime time = LocalTime.of(11, 12, 34);
+LocalDateTime dateTime = LocalDateTime.of(date, time);
+
+DateTimeFormatter shortF = DateTimeFormatter
+ .ofLocalizedDateTime(FormatStyle.SHORT);
+DateTimeFormatter mediumF = DateTimeFormatter
+ .ofLocalizedDateTime(FormatStyle.MEDIUM);
+System.out.println(shortF.format(dateTime)); // 1/20/20 11:12 AM
+System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
+If you don’t want to use one of the predefi ned formats, you can create your own. For 
+example, this code spells out the month:
+DateTimeFormatter f = DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm");
+System.out.println(dateTime.format(f)); // January 20, 2020, 11:12
